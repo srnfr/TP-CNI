@@ -2,6 +2,10 @@
 
 Creez un Network Policy (NP) en ingress qui restreint l'accès à redis-leader uniquement depuis les redis-follower et les frontend
 
+Pour cela utiliser :
+* le [Network Policy Editor Cilium](https://editor.cilium.io/)
+* le visualisateur [Orca](https://orca.tufin.io/netpol/)
+
 ```yaml
 ## np-allow-redis-leader.yaml
 ```
