@@ -23,3 +23,5 @@ Vérifier que depuis le NS blue, on n'a plus accès à redis-leader
 kubectl run -it --rm --restart=Never --image=nicolaka/netshoot --namespace=blue debug
 # nc redis-leader.default.svc 6379
 ```
+
+##Cleanup : retirons la NP

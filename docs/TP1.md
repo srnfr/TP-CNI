@@ -9,6 +9,8 @@ kubectl version --client
 
 ## Installer kubectx
 
+## Installer cilium
+
 ## Installer le fichier kubeconfig
 
 ## Vérifier que l'accès fonctionne
@@ -32,4 +34,9 @@ Installer  nsenter qui permet de se connecter dans les Nodes via un pod privilé
 git clone https://github.com/alexei-led/nsenter.git
 cd nsenter
 ./nsenter-node.sh <nom du node>
+```
+
+## Statut de Cilium
+```shell
+cilium status
 ```

@@ -34,7 +34,7 @@ Vérifier que redis-leader est accessible depuis redis-slave
 nc -p 6379 redis-leader
 ```
 
-Cleanup : retirons la NP
+## Cleanup : retirons la NP
 ```shell
 kubectl delete -f np-allow-redis-leader.yaml
 ```
