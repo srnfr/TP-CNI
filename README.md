@@ -11,3 +11,8 @@
 * [Egress Nework Policy](/docs/TP8.md)
 * [Règle de Log](/docs/TP9.md)
 * [Filtrage de flux L7](/docs/TP10.md)
+* [Preservation de l'IP source](/docs/TP11.md)
+* [eBPF](/docs/TP12.md)
+* [Hubless](/docs/TP13.md)
+* [BGP](/docs/TP14.md)
+* [Ingress Controller](/docs/TP13.md)
