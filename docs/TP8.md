@@ -9,3 +9,6 @@ kubectl run -it --rm --restart=Never --image=nicolaka/netshoot --namespace=blue 
 # curl http://23.23.23.23
 # curl http://1.1.1.1
 ```
+
+
+## Cleanup : retirons la NP
