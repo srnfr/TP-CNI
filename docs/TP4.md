@@ -1,28 +1,40 @@
-## Deployer une première application
+# Deployer une première application
 
+## Consitution de l'application
 
 Cloner le guestbook PHP
 ```shell
-git clone https://github.com/GoogleCloudPlatform/kubernetes-engine-samples
+git clone https://github.com/GoogleCloudPlatform/kubernetes-engine-samples ;
 cd kubernetes-engine-samples/guestbook
 ```
 
-L'architecture du guestbook est la suivante:
+L'architecture du guestbook est décrite ici :
 https://cloud.google.com/static/kubernetes-engine/images/guestbook_diagram.svg
 
-Déployer redis-leader et son service :
+Vous remarquez le coeur de l'appli s'appuie sur l'image gb-front disponible dans ce registry : https://console.cloud.google.com/artifacts/docker/google-samples/us/containers/gke%2Fgb-frontend
+
+Le code est disponible ici :
+https://github.com/GoogleCloudPlatform/kubernetes-engine-samples/tree/main/guestbook/php-redis
+
+Analysez-le pour comprendre 
+* comment la variable d'environnement GET_HOSTS_FROM est utilisée (valeur "env" ou "dns")
+* comment le PHP appelle Redis pour écrire (set)
+* comment le PHP appelle Redis pour lire (get)
+
+## Deploiement de l'application
+
 ```shell
-kubectl apply -f redis-leader-deployment.yaml
+Déployer le deploiement redis-leader :
+```shell
+kubectl apply -f redis-leader-service.yaml
+```
+.. et son service ClusterIP
+```shell
 kubectl apply -f redis-leader-service.yaml
 ```
 
-Déployer redis-follower et son service :
-```shell
-kubectl apply -f redis-follower-deployment.yaml
-kubectl apply -f redis-follower-service.yaml
-```
 
-Déployer le frontend :
+Lire comment les variables sont injectées dans le container et déployer le frontend :
 ```shell
 kubectl apply -f frontend-deployment.yaml
 ```
@@ -32,9 +44,25 @@ Vérifier que les replicas sont bien déployés :
 kubectl get pods -l app=guestbook -l tier=frontend
 ```
 
-Exposer le service frontend :
+Exposer le service frontend (c'est un LoadBalancer) :
+```shell):
 ```shell
 kubectl apply -f frontend-service.yaml
 ```
 
-Trouver l'IP de publication et vérifier avec votre navigateur que l'application fonctionne.
+Attendez que le LB soit pret trouvez l'IP publique d'exposition.
+Vérifier avec votre navigateur que l'application fonctionne.
+
+## Debugging
+Vous remarquez une erreur dans la console web (F12) : le service redis-follower n'est pas resolu hors il est utilisé pour la lecture dans la base redis.
+
+Déployer le deploiment redis-follower  :
+```shell
+kubectl apply -f redis-follower-deployment.yaml
+```
+.. et son service
+```shell
+kubectl apply -f redis-follower-service.yaml
+```
+
+Verifier que tout fonctionne enfin.

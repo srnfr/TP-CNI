@@ -1,15 +1,15 @@
 # Setup initial
 
-## Installer kubectl
+## Installer `kubectl`
 
 
 ```shell
 kubectl version --client
 ```
 
-## Installer kubectx
+## Installer `kubectx` cli
 
-## Installer cilium
+## Installer `cilium`
 
 ## Installer le fichier kubeconfig
 
@@ -23,13 +23,13 @@ Vérifier que les Workers Nodes sont biens vus :
 ```bash
 kubectl get nodes -o wide
 ```
-Notez 
+Notez :
 * leurs IP publiques et privées
 * la version du container runtime
-* la version du lernel sous-jaçent
+* la version du kernel sous-jaçent
 
 ## Accès aux Node
-Installer  nsenter qui permet de se connecter dans les Nodes via un pod privilégié :
+Installer  `nsenter` qui permet de se connecter dans les Nodes via un pod privilégié :
 ```bash
 git clone https://github.com/alexei-led/nsenter.git
 cd nsenter
@@ -37,6 +37,18 @@ cd nsenter
 ```
 
 ## Statut de Cilium
+Dans ce setup, Cilium est déjà installé comme CNI.
+
+```shell
+cilium version
+```
+
 ```shell
 cilium status
 ```
+cilium status
+```
+
+## Installer `stern`
+
+`Stern` permet de facilement consulter les logs de plusieurs pods en même temps.
