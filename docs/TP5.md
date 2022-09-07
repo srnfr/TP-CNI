@@ -1,7 +1,6 @@
 ## Namespace et libre circulation
 
-
-Créer le namespace blue 
+Créer le namespace "blue" 
 ```shell
 kubectl create ns blue
 ```
@@ -11,14 +10,16 @@ Déployer un pod dans le namespace blue
 kubectl run -it --rm --restart=Never --image=nicolaka/netshoot --namespace=blue debug
 ```
 
-Depuis ce pod, vérifier que vous avez accès au redis
+Depuis ce pod, vérifier que vous avez accès au redis-leader
 ```shell
-nc -p 6379 redis-leader 
+nc redis-leader -p 6379 
 ```
 
 Verfier que vous pouvez sortir sur Internet sans restriction
 ```shell
-curl https://perdus.com
-curl http://23.23.23.23
-curl https://myip.sreytan.workers.dev
+curl https://perdus.com ;
+curl http://23.23.23.23 ; 
+curl https://myip.sreytan.workers.dev ;
 ```
+
+La dernière URL affiche l'IP vue, remqrquez que c'est celle du Node (normal SNAT en Masquerade).
