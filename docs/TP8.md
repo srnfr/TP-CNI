@@ -44,3 +44,5 @@ kubectl run -it --rm --restart=Never --image=nicolaka/netshoot --namespace=blue 
 ```shell
 kubectl delete -f np-egress.yaml -n blue
 ```
+
+[Revenir au sommaire](../README.md) | [TP Suivant](./TP9.md)

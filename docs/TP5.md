@@ -23,3 +23,5 @@ curl https://myip.sreytan.workers.dev ;
 ```
 
 La dernière URL affiche l'IP vue, remqrquez que c'est celle du Node (normal SNAT en Masquerade).
+
+[Revenir au sommaire](../README.md) | [TP Suivant](./TP6.md)

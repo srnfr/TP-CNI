@@ -68,3 +68,5 @@ kubectl apply -f redis-follower-service.yaml
 ```
 
 Verifier que tout fonctionne enfin.
+
+[Revenir au sommaire](../README.md) | [TP suivant](./TP5.md)

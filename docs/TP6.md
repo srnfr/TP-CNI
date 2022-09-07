@@ -38,3 +38,5 @@ nc -p 6379 redis-leader
 ```shell
 kubectl delete -f np-allow-redis-leader.yaml
 ```
+
+[Revenir au sommaire](../README.md) | [TP Suivant](./TP7.md)

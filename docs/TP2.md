@@ -58,3 +58,5 @@ kubect get svc
 
 Notez la publication sur un port dynamique > 30.000
 Naviguez sur ce port sur chacun des noeuds et constatez...
+
+[Revenir au sommaire](../README.md) | [TP suivant](./TP3.md)

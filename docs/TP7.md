@@ -36,4 +36,8 @@ kubectl run -it --rm --restart=Never --image=nicolaka/netshoot --namespace=blue 
 ```
 
 ## Cleanup : retirons la NP
+```shell
 kubectl delete -f np-ns-isolation.yaml -n default
+```
+
+[Revenir au sommaire](../README.md) | [TP Suivant](./TP8.md)
