@@ -1,8 +1,31 @@
 # Le reseau vu depuis les Pods
 
-Déployer un Daemonset de debug
+Déployer un DaemonSet à des fins de debug
 ```shell
-kubectl create daemonset debug --image=nicolaka/netshoot
+kubectl apply -f ds-tshoot.yml
+```
+Pour notre, voici le contenu de ce fichier :
+```yaml
+---
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: ds-netshoot
+spec:
+  selector:
+    matchLabels:
+      run: netshoot
+  template:
+    metadata:
+      labels:
+        run: netshoot
+    spec:
+      containers:
+      - name: netshoot
+        image: nicolaka/netshoot
+        tty: true
+        stdin: true
+        stdinOnce: true
 ```
 
 Vérifier que les pods sont bien créés
@@ -10,22 +33,32 @@ Vérifier que les pods sont bien créés
 kubectl get ds -o wide
 ```
 
-Se connecter dans un pod (remplacer xxxx par une valeur correcte):
+Creez un shell à l'intérieur un pod (remplacer xxxx par une valeur correcte):
 ```shell
 kubectl exec -it debug-xxxxx -- /bin/bash
 ```
 
-Vérifier que le DNS fonctionne pour les noms de services
+Vérifier que le DNS fonctionne pour les noms de service
 ```shell
 host hello-world.default.svc.cluster.local
 ```
+Remarquez que le ping des svc ClusterIP ne donne rien... *Pourquoi ?*
+```shell
+ping hello-world.default.svc.cluster.local
+```
+L'accès applicatif est lui fonctionnel
+```shell
+curl hello-world.default.svc.cluster.local
+```
 
-Vérifier qu'on peut pinguer les autres pods (remlplacer xxxx par une valeur correcte):
+Vérifier qu'on peut bien pinguer les autres pods (remplacer xxxx par une valeur correcte):
 ```shell
 ping hello-world-xxxxx
 ```
 
-Nettoyer
+On remarquera que les plages d'IP des Pods sont disctinctes par Node, et également distincte de la plage des svc ClusterIP. C'est un choix d'implémention fréquent.
+
+## Nettoyer
 ```shell
 kubectl delete svc hello-world
 kubectl delete deployment hello-world

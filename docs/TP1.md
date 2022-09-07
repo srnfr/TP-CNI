@@ -7,17 +7,22 @@
 kubectl version --client
 ```
 
-## Installer `kubectx` cli
+## Installer `kubectx`
 
-## Installer `cilium`
+## Installer `cilium` cli
+(Cilium sera pré-installé sur votre Cluster)
 
-## Installer le fichier kubeconfig
+## Récupérer et installer le fichier kubeconfig
+L'animateur vous fournit le lien de téléchargement
+Enregistrez le dans votre répertoire home sous le nom `.kube/config`
 
 ## Vérifier que l'accès fonctionne
 
 ```bash
-kubectl get cluster-info
+kubectl cluster-info
 ```
+
+Pour rappel un cheat-sheet est disponible [ici](https://kubernetes.io/fr/docs/reference/kubectl/cheatsheet/)
 
 Vérifier que les Workers Nodes sont biens vus :
 ```bash
@@ -50,5 +55,5 @@ cilium status
 ```
 
 ## Installer `stern`
-
 `Stern` permet de facilement consulter les logs de plusieurs pods en même temps.
+Le code est disponile sous [https://github.com/stern/stern](https://github.com/stern/stern).

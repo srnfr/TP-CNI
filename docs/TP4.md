@@ -54,13 +54,15 @@ Attendez que le LB soit pret trouvez l'IP publique d'exposition.
 Vérifier avec votre navigateur que l'application fonctionne.
 
 ## Debugging
-Vous remarquez une erreur dans la console web (F12) : le service redis-follower n'est pas resolu hors il est utilisé pour la lecture dans la base redis.
+Vous remarquez une erreur dans la console de votre navigateur (F12) : le service `redis-follower` n'est pas resolu, or il est utilisé pour la lecture dans la base de données redis.
 
 Déployer le deploiment redis-follower  :
 ```shell
 kubectl apply -f redis-follower-deployment.yaml
 ```
+
 .. et son service
+
 ```shell
 kubectl apply -f redis-follower-service.yaml
 ```

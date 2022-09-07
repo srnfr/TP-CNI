@@ -2,18 +2,29 @@
 
 Pour plus de simplicité nous cloisonnons les NS entre eux
 
-
 Créeons un NP de cloisonnement :
 ```yaml
 ## np-ns-isolation.yaml
+kind: NetworkPolicy
+apiVersion: networking.k8s.io/v1
+metadata:
+  namespace: default
+  name: deny-from-other-namespaces
+spec:
+  podSelector:
+    matchLabels:
+  ingress:
+  - from:
+    - podSelector: {}
 ```
+https://github.com/ahmetb/kubernetes-network-policy-recipes est un bon endroit pour démarrer...
 
-Appliquons là au NS default
+Appliquons-la au NS default
 ```shell
 kubectl apply -f np-ns-isolation.yaml -n default
 ```
 
-Vérifier que le NP est bien appliqué
+Vérifier que le NP est bien appliquée (-A == tous les ns)
 ```shell
 kubectl get netpol -A
 ```
@@ -24,4 +35,5 @@ kubectl run -it --rm --restart=Never --image=nicolaka/netshoot --namespace=blue 
 # nc redis-leader.default.svc 6379
 ```
 
-##Cleanup : retirons la NP
+## Cleanup : retirons la NP
+kubectl delete -f np-ns-isolation.yaml -n default

@@ -1,7 +1,36 @@
 ## Egress Network Policy
 
-
 Dans le NS blue, créer et appliquer une Egress NP qui empeche l'accès 23.23.23.23 en HTTP mais qui permette les autres flux.
+
+Vous pouvez partir du template ci dessous : n'oubliez pas 
+* que le DNS doit fonctionner 
+* que tous les flux doivent être whitelistés dès qu'une 1ère régle s'applique à un Pod donné
+* que l'action DENY n'existe pas (on le construit en faisant un ALLOW vers un CIDR en précisant une exception)
+
+```yaml
+### np-egress.yaml
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: foo-deny-egress
+spec:
+  podSelector:
+    matchLabels:
+      app: foo
+  policyTypes:
+  - Egress
+  egress:
+  # allow DNS resolution
+  - ports:
+    - port: 53
+      protocol: UDP
+    - port: 53
+      protocol: TCP
+```
+L'appliquer dans le NS blue
+```shell
+kubectl apply -f np-egress.yaml -n blue
+```
 
 Tester :
 ```shell
@@ -12,3 +41,6 @@ kubectl run -it --rm --restart=Never --image=nicolaka/netshoot --namespace=blue 
 
 
 ## Cleanup : retirons la NP
+```shell
+kubectl delete -f np-egress.yaml -n blue
+```

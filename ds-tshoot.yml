@@ -1,0 +1,20 @@
+---
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: ds-netshoot
+spec:
+  selector:
+    matchLabels:
+      run: netshoot
+  template:
+    metadata:
+      labels:
+        run: netshoot
+    spec:
+      containers:
+      - name: netshoot
+        image: nicolaka/netshoot
+        tty: true
+        stdin: true
+        stdinOnce: true
