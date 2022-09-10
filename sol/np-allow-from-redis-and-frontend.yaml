@@ -1,0 +1,21 @@
+## np-allow-from-redis-and-frontend.yaml
+kind: NetworkPolicy
+apiVersion: networking.k8s.io/v1
+metadata:
+  name: allow-from-redis-and-frontend
+spec:
+  policyTypes:
+  - Ingress
+  podSelector:
+    matchLabels:
+      app: redis
+      role: leader
+      tier: backend
+  ingress:
+  - from:
+    - podSelector:
+        matchLabels:
+          app: guestbook
+    - podSelector:
+        matchLabels:
+          app: redis      
