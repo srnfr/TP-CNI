@@ -17,4 +17,5 @@
 14. [Hubble](/docs/TP14.md)
 15. [Ingress Controller](/docs/TP13.md)
 16. [eBPF Network Deep Dive](/docs/TP16.md)
-17. [Securisation grandeure nature : Hispster Shop](/docs/TP17.md)
+17. [Securisation grandeure nature : Hipster Shop](/docs/TP17.md)
+18. [eBPF et DSR](/docs/TP18.md)
