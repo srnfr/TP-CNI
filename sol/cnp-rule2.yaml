@@ -1,0 +1,19 @@
+apiVersion: "cilium.io/v2"
+kind: CiliumNetworkPolicy
+metadata:
+  name: "rule2"
+spec:
+  ##auditMode: true
+  description: "Deny alliance"
+  endpointSelector:
+    matchLabels:
+      org: empire
+      class: deathstar
+  ingressDeny:
+  - fromEndpoints:
+    - matchLabels:
+        org: alliance
+    toPorts:
+    - ports:
+      - port: "80"
+        protocol: TCP
