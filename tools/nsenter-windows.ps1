@@ -2,7 +2,7 @@ $node=$args[0]
 $nodeName=$(kubectl get node ${node} -o=template --template='{{index .metadata.labels \"kubernetes.io/hostname\"}}')
 
 $nodeSelector="`"nodeSelector`": {`"kubernetes.io/hostname`": `"${nodeName}`"},"
-$podName="$env:UserName-nsenter-${node}"
+$podName="$env:UserName-nsenter-${node}-$(Get-Random)"
 $podName=$podName.replace('@', '-')
 $podName=$podName.replace('.', '-')
 $podName=$podName.subString(0, [System.Math]::Min(63, $podName.Length))
