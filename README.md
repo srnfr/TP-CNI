@@ -4,7 +4,7 @@
 1. [Setup Initial](/docs/TP01.md)
 2. [Deployer et inspecter un svc ClusterIP puis LoadBalancer et NodePort](/docs/TP02.md)
 3. [Le réseau vu depuis les Pods](/docs/TP03.md)
-4. [Deployer et débugger une premiere appli](/docs/TP04.md)
+4. [Deployer et débugger une premiere application](/docs/TP04.md)
 5. [NameSpace et libre circulation](/docs/TP05.md)
 6. [Première Ingress Network Policy](/docs/TP06.md)
 7. [Cloisonnement par NameSpace](/docs/TP07.md)
