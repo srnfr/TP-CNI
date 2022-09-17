@@ -12,7 +12,7 @@
 9. [Monitoring & Métriques réseau *](/docs/TP09.md)
 10. [Filtrage de flux L7](/docs/TP10.md)
 11. [Preservation de l'IP source avec `externalTrafficPolicy`](/docs/TP11.md)
-12. [eBPF *](/docs/TP12.md)
+12. [eBPF et DSR *](/docs/TP12.md)
 13. [BGP *](/docs/TP13.md)
 14. [Hubble *](/docs/TP14.md)
 15. [Ingress Controller](/docs/TP13.md)
