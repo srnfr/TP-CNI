@@ -18,7 +18,7 @@
 15. [Ingress Controller](/docs/TP13.md)
 16. [eBPF Network Deep Dive](/docs/TP16.md)
 17. [Securisation grandeure nature : Hipster Shop](/docs/TP17.md)
-18. [eBPF et DSR *](/docs/TP18.md)
+18. [KO ?](/docs/TP18.md)
 19. [Audit Mode](/docs/TP19.md)
 20. [Filtrage L7 en autonomie](/docs/TP20.md)
 
