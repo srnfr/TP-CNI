@@ -13,10 +13,10 @@
 10. [Filtrage de flux L7](/docs/TP10.md)
 11. [Preservation de l'IP source avec `externalTrafficPolicy`](/docs/TP11.md)
 12. [eBPF et DSR *](/docs/TP12.md)
-13. [BGP *](/docs/TP13.md)
+13. [BGP *](/docs/TP13.md) //TO-DO
 14. [Hubble *](/docs/TP14.md)
-15. [Ingress Controller](/docs/TP13.md)
-16. [eBPF Network Deep Dive](/docs/TP16.md)
+15. [Ingress Controller](/docs/TP13.md) //TO-DO
+16. [eBPF Network Deep Dive](/docs/TP16.md) //TO-DO
 17. [Securisation grandeure nature : Hipster Shop](/docs/TP17.md)
 18. [Audit Mode](/docs/TP18.md)
 19. [Filtrage L7 en autonomie](/docs/TP19.md)
