@@ -1,12 +1,12 @@
 #!/bin/sh
 
 if [ -z "$1" ]; then 
-   echo "Syntax: $0 <numero de cluster>"
+   echo "Syntax: $0 <numero de cluster> <entropy>"
    exit -1
 fi
 
 if [ ! -f ~/.kube/config ]; then 
-  wget https://kconfig.fra1.digitaloceanspaces.com/k8-do-grp${$1}.kubeconfig -O ~/.kube/config
+  wget "https://kconfig.fra1.digitaloceanspaces.com/k8-do-grp${$1}-{$entropy}.kubeconfig" -O ~/.kube/config
 fi
 
 kubectl cluster-info
