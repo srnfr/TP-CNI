@@ -1,9 +1,9 @@
 #!/bin/bash
 
 ##Cleanup
-#for f in $(s3cmd ls s3://kconfig/ | awk '{print $4}'); do
-#  s3cmd rm $f
-#done
+for f in $(s3cmd ls s3://kconfig/ | awk '{print $4}'); do
+  s3cmd rm $f
+done
 
 ##Save
 for c in $(doctl kubernetes clusters list --format Name | grep -v Name ); do
@@ -14,10 +14,10 @@ for c in $(doctl kubernetes clusters list --format Name | grep -v Name ); do
 done;
 
 ##Upload
-#s3cmd put *.kubeconfig s3://kconfig/
+s3cmd put *.kubeconfig s3://kconfig/
 
 ## Clean local files
-#rm -f *.kubeconfig
+rm -f *.kubeconfig
 
 
 
