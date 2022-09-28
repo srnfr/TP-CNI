@@ -19,6 +19,6 @@ s3cmd put *.kubeconfig s3://kconfig/
 ## Clean local files
 rm -f *.kubeconfig
 
-
-
+##
+echo "NE PAS OUBLIER DE RENDRE PUBLIC LES KUBECONFIG"
 
