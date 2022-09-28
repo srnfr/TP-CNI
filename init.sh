@@ -1,5 +1,11 @@
 #!/bin/sh
 
+###
+cd /workspace/TP-CNI
+git pull
+
+
+###
 if [ -z "$2" ]; then 
    echo "Syntax: $0 <numero de cluster> <entropy>"
    exit -1
@@ -8,7 +14,7 @@ fi
 GRP=$1
 ENTROPY=$2
 URL="https://kconfig.fra1.digitaloceanspaces.com/k8-do-grp${GRP}-${ENTROPY}.kubeconfig"
-echo "Downloading $URL..."
+echo "Downloading $URL ..."
 
 wget $URL -O ~/.kube/config
 
@@ -18,6 +24,8 @@ if [ $? -ne 0 ]; then
   echo "mauvais kubeconfig!"
   exit -2;
 fi
+
+## Install Cilium et autres
 
 export CILIUM_CLI_VERSION=$(curl -s https://raw.githubusercontent.com/cilium/cilium-cli/master/stable.txt)
 export GOOS=linux
