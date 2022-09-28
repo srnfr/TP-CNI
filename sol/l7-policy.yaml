@@ -1,0 +1,21 @@
+## l7-policy.yaml
+apiVersion: "cilium.io/v2"
+kind: CiliumNetworkPolicy
+metadata:
+  name: "rule1"
+spec:
+  endpointSelector:
+    matchLabels:
+      app: podinfo
+  ingress:
+  - fromEndpoints:
+    - matchLabels:
+        run: debug-pod
+    toPorts:
+    - ports:
+      - port: "9898"
+        protocol: TCP
+      rules:
+        http:
+        - method: "GET"
+          path: "/readyz"
