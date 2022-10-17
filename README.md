@@ -23,3 +23,5 @@
 
 Les TP dont les noms finissent en (*) se déroulent sur un VM avec un cluster KinD.  
 Les autres se déroulent sur l'opérateur de Cloud Public DigitalOcean.
+
+Ces TPs ont été écrts par @srnfr. Leur usage est possible dans le cadre de la [Licence](LICENCE.MD)
