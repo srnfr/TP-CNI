@@ -26,24 +26,25 @@ if [ $? -ne 0 ]; then
 fi
 
 ## Install Cilium et autres
+if ![ -f /usr/local/bin/cilium ]; then
+  export CILIUM_CLI_VERSION=$(curl -s https://raw.githubusercontent.com/cilium/cilium-cli/master/stable.txt)
+  export GOOS=linux
+  export GOARCH=amd64
+  curl -s -L --remote-name-all https://github.com/cilium/cilium-cli/releases/download/${CILIUM_CLI_VERSION}/cilium-${GOOS}-${GOARCH}.tar.gz{,.sha256sum}
+  sha256sum --check cilium-${GOOS}-${GOARCH}.tar.gz.sha256sum
+  sudo tar -C /usr/local/bin -xzvf cilium-${GOOS}-${GOARCH}.tar.gz
+  rm -f cilium-*.tar.gz{,.sha256sum}
 
-export CILIUM_CLI_VERSION=$(curl -s https://raw.githubusercontent.com/cilium/cilium-cli/master/stable.txt)
-export GOOS=linux
-export GOARCH=amd64
-curl -s -L --remote-name-all https://github.com/cilium/cilium-cli/releases/download/${CILIUM_CLI_VERSION}/cilium-${GOOS}-${GOARCH}.tar.gz{,.sha256sum}
-sha256sum --check cilium-${GOOS}-${GOARCH}.tar.gz.sha256sum
-sudo tar -C /usr/local/bin -xzvf cilium-${GOOS}-${GOARCH}.tar.gz
-rm -f cilium-*.tar.gz{,.sha256sum}
+  kubectl krew install cilium
+  kubectl krew index add kvaps https://github.com/kvaps/krew-index
+  kubectl krew install kvaps/node-shell
 
-kubectl krew install cilium
-kubectl krew index add kvaps https://github.com/kvaps/krew-index
-kubectl krew install kvaps/node-shell
+  for i in $(kubectl get node -o json | jq -r '.items[].metadata.name'); do
+	  kubectl cilium exec $i cilium version
+	  kubectl cilium exec $i cilium status
+  done
+  kubectl krew install stern
 
-for i in $(kubectl get node -o json | jq -r '.items[].metadata.name'); do
-	kubectl cilium exec $i cilium version
-	kubectl cilium exec $i cilium status
-done
-kubectl krew install stern
-
-cilium version
-cilium status
+  cilium version
+  cilium status
+fi
