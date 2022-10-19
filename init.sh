@@ -26,7 +26,9 @@ if [ $? -ne 0 ]; then
 fi
 
 ## Install Cilium et autres
-if ![ -f /usr/local/bin/cilium ]; then
+if [ -f /usr/local/bin/cilium ]; then
+  echo "Cilium deja installé"
+else
   export CILIUM_CLI_VERSION=$(curl -s https://raw.githubusercontent.com/cilium/cilium-cli/master/stable.txt)
   export GOOS=linux
   export GOARCH=amd64
@@ -44,7 +46,7 @@ if ![ -f /usr/local/bin/cilium ]; then
 	  kubectl cilium exec $i cilium status
   done
   kubectl krew install stern
-
-  cilium version
-  cilium status
 fi
+
+cilium version
+cilium status
