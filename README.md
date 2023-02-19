@@ -21,7 +21,7 @@
 18. [Audit Mode](/docs/TP18.md)
 19. [Filtrage L7 en autonomie](/docs/TP19.md)
 
-Les TP dont les noms finissent en (*) se déroulent sur un VM avec un cluster KinD.  
+Les TP dont les noms finissent en (*) se déroulent sur un VM avec un cluster [KinD](https://kind.sigs.k8s.io/).  
 Les autres se déroulent sur l'opérateur de Cloud Public DigitalOcean ([lien sponsorisé : 200€ sur 60j](https://m.do.co/c/ffe6205525bf)).
 
 Ces TPs ont été écrits par @srnfr.
