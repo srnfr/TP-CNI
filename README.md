@@ -26,4 +26,4 @@ Les autres se déroulent sur l'opérateur de Cloud Public DigitalOcean ([lien sp
 
 Ces TPs ont été écrits par @srnfr. Leur usage est possible dans le cadre de la [Licence GPL2.0](./LICENSE.md).
 
-Dernière MaJ: {{ git_site_last_updated }}
+Dernière MaJ: [ git_site_last_updated ]
