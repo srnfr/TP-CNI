@@ -24,6 +24,6 @@
 Les TP dont les noms finissent en (*) se déroulent sur un VM avec un cluster KinD.  
 Les autres se déroulent sur l'opérateur de Cloud Public DigitalOcean ([lien sponsorisé : 200€ sur 60j](https://m.do.co/c/ffe6205525bf)).
 
-Ces TPs ont été écrits par @srnfr. Leur usage est possible dans le cadre de la [Licence GPL2.0](./LICENSE.md).
+Ces TPs ont été écrits par @srnfr.
 
-Dernière MaJ: [ git_site_last_updated ]
+Leur usage est possible dans le cadre de la [Licence GPL2.0](./LICENSE.md).
