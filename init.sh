@@ -13,7 +13,7 @@ fi
 
 GRP=$1
 ENTROPY=$2
-URL="https://kconfig.fra1.digitaloceanspaces.com/k8-do-grp${GRP}-${ENTROPY}.kubeconfig"
+URL="https://kconfig.fra1.digitaloceanspaces.com/k8-do-grp${GRP}-${ENTROPY}.kubeconfig.yaml"
 echo "Downloading $URL ..."
 
 wget $URL -O ~/.kube/config
