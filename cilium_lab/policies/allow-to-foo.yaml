@@ -1,0 +1,9 @@
+apiVersion: "cilium.io/v2"
+kind: CiliumNetworkPolicy
+metadata:
+  name: "allow-to-foo"
+spec:
+  endpointSelector:
+    matchLabels:
+      app: foo
+  ingress:

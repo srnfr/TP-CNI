@@ -1,0 +1,41 @@
+---
+kind: Cluster
+name: clab-bgp-cplane-demo
+apiVersion: kind.x-k8s.io/v1alpha4
+nodes:
+- role: control-plane
+  kubeadmConfigPatches:
+    - |
+      kind: InitConfiguration
+      nodeRegistration:
+        kubeletExtraArgs:
+          node-labels: "rack=rack0"
+- role: worker
+  kubeadmConfigPatches:
+  - |
+      kind: JoinConfiguration
+      nodeRegistration:
+        kubeletExtraArgs:
+          node-labels: "rack=rack0"
+- role: worker
+  kubeadmConfigPatches:
+  - |
+      kind: JoinConfiguration
+      nodeRegistration:
+        kubeletExtraArgs:
+          node-ip: "10.0.3.2"
+          node-labels: "rack=rack1"
+- role: worker
+  kubeadmConfigPatches:
+  - |
+      kind: JoinConfiguration
+      nodeRegistration:
+        kubeletExtraArgs:
+          node-ip: "10.0.4.2"
+          node-labels: "rack=rack1"
+networking:
+  disableDefaultCNI: true
+  podSubnet: "10.244.0.0/16"
+  serviceSubnet: "10.245.0.0/16"
+  apiServerAddress: "0.0.0.0"
+  apiServerPort: 6443

@@ -1,0 +1,18 @@
+all:
+  children:
+    linux:
+      hosts:
+        clab-bgp-cplane-demo-router0:
+          ansible_host: 172.20.20.4
+        clab-bgp-cplane-demo-server0:
+          ansible_host: 
+        clab-bgp-cplane-demo-server1:
+          ansible_host: 
+        clab-bgp-cplane-demo-server2:
+          ansible_host: 
+        clab-bgp-cplane-demo-server3:
+          ansible_host: 
+        clab-bgp-cplane-demo-tor0:
+          ansible_host: 172.20.20.3
+        clab-bgp-cplane-demo-tor1:
+          ansible_host: 172.20.20.2

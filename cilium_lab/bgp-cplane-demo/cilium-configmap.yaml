@@ -1,0 +1,17 @@
+## cilium-configmap.yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: bgp-config
+  namespace: kube-system
+data:
+  config.yaml: |
+    peers:
+      - peer-address: 10.0.0.1
+        peer-asn: 65010
+        my-asn: 65010
+    address-pools:
+      - name: default
+        protocol: bgp
+        addresses:
+          - 192.0.2.0/24

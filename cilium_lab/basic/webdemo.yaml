@@ -1,0 +1,38 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: svc-echoserver
+  labels:
+    run: svc-echoserver
+spec:
+  ##type: ClusterIP
+  type: NodePort
+  ##type: LoadBalancer
+  ##externalTrafficPolicy: Cluster
+  externalTrafficPolicy: Local
+  ports:
+  - port: 8080
+    targetPort: 8080
+    protocol: TCP
+  selector:
+    run: echoserver
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: deploy-echoserver
+spec:
+  selector:
+    matchLabels:
+      run: echoserver
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        run: echoserver
+    spec:
+      containers:
+      - name: echoserver
+        image: inanimate/echo-server
+        ports:
+        - containerPort: 8080
