@@ -13,12 +13,10 @@ for c in $(doctl kubernetes clusters list --format Name | grep -v Name ); do
     fi
 done;
 
-##Upload
-s3cmd put *.kubeconfig.yaml s3://kconfig/
+##Upload && public
+s3cmd put *.kubeconfig.yaml s3://kconfig/ --acl-public --recursive
 
 ## Clean local files
 rm -f *.kubeconfig.yaml
 
 ##
-echo "NE PAS OUBLIER DE RENDRE PUBLIC LES KUBECONFIG"
-
