@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: demo-container
-        image: httpd:latest
+        image: nginxdemos/hello
         ports:
           - containerPort: 80
  
