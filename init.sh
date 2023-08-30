@@ -4,7 +4,6 @@
 cd /workspace/TP-CNI
 git pull
 
-
 ###
 if [ -z "$2" ]; then 
    echo "Syntax: $0 <numero de cluster> <entropy>"
@@ -12,11 +11,13 @@ if [ -z "$2" ]; then
 fi
 
 GRP=$1
+
 ENTROPY=$2
 URL="https://kconfig.fra1.digitaloceanspaces.com/k8-do-grp${GRP}-${ENTROPY}.kubeconfig.yaml"
 echo "Downloading $URL ..."
 
-wget $URL -O ~/.kube/config
+wget -nv $URL -O ~/.kube/config
+chmod o-r ~/.kube/config
 
 kubectl cluster-info
 
@@ -50,3 +51,6 @@ fi
 
 cilium version
 cilium status
+
+echo "#-----------------"
+echo "Votre groupe : ${GRP}"
