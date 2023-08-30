@@ -18,6 +18,7 @@ echo "Downloading $URL ..."
 
 wget -nv $URL -O ~/.kube/config
 chmod o-r ~/.kube/config
+chmod g-r ~/.kube/config
 
 kubectl cluster-info
 
