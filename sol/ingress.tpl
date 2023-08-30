@@ -16,7 +16,7 @@ spec:
       - name: demo-container
         image: paulbouwer/hello-kubernetes:1.10
         ports:
-          - containerPort: 80
+          - containerPort: 8080
  
 ---
 
