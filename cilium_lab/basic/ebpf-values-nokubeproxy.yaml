@@ -1,0 +1,39 @@
+kubeProxyReplacement: true
+loadBalancer:
+  mode: dsr
+  #mode: snat
+nodePort:
+  mode: dsr
+tunnel: disabled
+autoDirectNodeRoutes: true
+ipv4NativeRoutingCIDR: "10.0.0.0/8"
+##
+k8sServiceHost: basic-control-plane # use master node in kind network
+k8sServicePort: 6443               # use api server port
+  #hostServices:
+  #  enabled: false
+externalIPs:
+  enabled: true
+nodePort:
+  enabled: true
+hostPort:
+  enabled: true
+image:
+  pullPolicy: IfNotPresent
+ipam:
+  mode: kubernetes
+prometheus:
+  enabled: true
+hubble:
+  enabled: true
+  metrics:
+    enabled:
+       - drop
+       - tcp
+       - flow
+       - icmp
+       - http
+  relay:
+    enabled: true
+  ui:
+    enabled: true
