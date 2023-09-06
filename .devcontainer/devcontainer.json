@@ -1,8 +1,8 @@
 {
-  "name": "my-project-devcontainer",
+  "name": "mon-projet-devcontainer",
   "image": "mcr.microsoft.com/devcontainers/base:ubuntu",
   "features": {
-    "ghcr.io/devcontainers/features/kubectl-helm-minikube:1.1.4": {},
+    "ghcr.io/devcontainers-"ghcr.io/devcontainers-contrib/features/kubectl-asdf": {},
     "ghcr.io/devcontainers/features/git:1.1.5": {}
   }
 }

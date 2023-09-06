@@ -1,7 +1,10 @@
 #!/bin/sh
 
 ###
-cd /workspace/TP-CNI
+# Test GitPod or GitHub CodeSpaces
+[ -d "/workspace/TP-CNI" ] && cd /workspace/TP-CNI
+[ -d "/workspaces/TP-CNI" ] && cd /workspaces/TP-CNI
+
 git pull
 
 ###
@@ -16,6 +19,7 @@ ENTROPY=$2
 URL="https://kconfig.fra1.digitaloceanspaces.com/k8-do-grp${GRP}-${ENTROPY}.kubeconfig.yaml"
 echo "Downloading $URL ..."
 
+[ ! -d "~/.kube" ] && mkdir ~/.kube
 wget -nv $URL -O ~/.kube/config
 chmod o-r ~/.kube/config
 chmod g-r ~/.kube/config
