@@ -2,7 +2,7 @@
   "name": "mon-projet-devcontainer",
   "image": "mcr.microsoft.com/devcontainers/base:ubuntu",
   "features": {
-    "ghcr.io/devcontainers-"ghcr.io/devcontainers-contrib/features/kubectl-asdf": {},
+    "ghcr.io/devcontainers-contrib/features/kubectl-asdf": {},
     "ghcr.io/devcontainers/features/git:1.1.5": {}
   }
 }
