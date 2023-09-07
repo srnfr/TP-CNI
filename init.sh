@@ -74,7 +74,7 @@ else
   echo "krew et ses modules deja installés"
 fi
 
-if ! [[ k9s version ]]; then
+if ! k9s version ; then
 	echo "Installation de k9s"
 	curl -sS https://webinstall.dev/k9s | bash
 	k9s version
@@ -87,5 +87,6 @@ for i in $(kubectl get node -o json | jq -r '.items[].metadata.name'); do
 	  kubectl cilium exec $i cilium status
 done
 
-echo "#-----------------"
+
+
 echo "Votre groupe : ${GRP}"
