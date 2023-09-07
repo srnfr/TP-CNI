@@ -9,8 +9,8 @@ git pull
 
 ###
 if [ -z "$2" ]; then 
-   echo "Syntax: $0 <numero de cluster> <entropy>"
-   exit -1
+   echo "Syntax Error: $0 <numero de cluster> <entropy>"
+   exit 0
 fi
 
 GRP=$1
@@ -72,6 +72,14 @@ if ! kubectl krew version ; then
 
 else
   echo "krew et ses modules deja installés"
+fi
+
+if ! [[ k9s version ]]; then
+	echo "Installation de k9s"
+	curl -sS https://webinstall.dev/k9s | bash
+	k9s version
+else
+	echo "k9s deja installe"
 fi
 
 for i in $(kubectl get node -o json | jq -r '.items[].metadata.name'); do
