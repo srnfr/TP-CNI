@@ -1,34 +1,9 @@
-#kubeProxyReplacement: strict
-##kubeProxyReplacement: partial
-##kubeProxyReplacement: disabled
-#loadBalancer:
-#  mode: dsr
-#mode: snat
 tunnel: disabled
-  ##ipv4NativeRoutingCIDR: "172.18.0.0/16"
-### Demo GBP
 ipv4NativeRoutingCIDR: "10.0.0.0/8"
 bgpControlPlane:
   enabled: true
 k8s:
   requireIPv4PodCIR: true
-## End of Demo
-#autoDirectNodeRoutes: true
-#tunnel: vxlan
-#tunnel: geneve
-#### CAUTION USE THE REAL NAME OF THE MASTER NODE
-##k8sServiceHost: 172.18.0.4 # use master node in kind network
-##k8sServicePort: 6443               # use api server port
-##hostServices:
-##  enabled: false
-#externalIPs:
-#  enabled: true
-#nodePort:
-#  enabled: true
-#hostPort:
-#  enabled: true
-#image:
-# pullPolicy: IfNotPresent
 ipam:
   mode: kubernetes
 hubble:
