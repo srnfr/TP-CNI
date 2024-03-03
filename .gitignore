@@ -1,2 +1,3 @@
 .DS_Store
 ingress.yaml
+cilium-linux-amd64.tar.gz
