@@ -28,4 +28,4 @@ Ces TPs ont été conçus et écrits par [@srnfr](https://github.com/srnfr/).
 
 Leur usage est possible dans le cadre de la [Licence GPL2.0](./LICENSE.md).
 
-Vous pouvez utiliser cet [aide-memoire des commandes kubernetes](https://dl.bluetrusty.eu/scaleway-kubernetes-cheatsheet.pdf).
+Vous pouvez utiliser cet [aide-memoire des commandes kubernetes](/docs/scaleway-kubernetes-cheatsheet.pdf).
