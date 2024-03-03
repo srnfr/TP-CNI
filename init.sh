@@ -53,12 +53,14 @@ cilium status
 export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH"
 
 ## Install Krew
-echo "---"
+echo "--- Krew ---"
 kubectl krew list
-kubectl krew install cilium
-kubectl krew index add kvaps https://github.com/kvaps/krew-index
-kubectl krew install kvaps/node-shell
-kubectl krew install stern
+if [ $(kubectl krew list  | wc -l) -lt 4 ] ; then
+  kubectl krew install cilium
+  kubectl krew index add kvaps https://github.com/kvaps/krew-index
+  kubectl krew install kvaps/node-shell
+  kubectl krew install stern
+fi
 
 if ! k9s version ; then
 	echo "Installation de k9s"

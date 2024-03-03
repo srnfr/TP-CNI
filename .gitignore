@@ -2,3 +2,4 @@
 ingress.yaml
 cilium-linux-amd64.tar.gz
 krew
+*.sha256sum
