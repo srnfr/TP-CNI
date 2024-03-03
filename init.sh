@@ -88,5 +88,5 @@ for i in $(kubectl get node -o json | jq -r '.items[].metadata.name'); do
 done
 
 
-
+echo "----"
 echo "Votre groupe : ${GRP}"
