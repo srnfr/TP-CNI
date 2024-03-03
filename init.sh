@@ -53,8 +53,10 @@ cilium status
 export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH"
 
 ## Install Krew
-if ! kubectl krew version ; then
-  (
+echo "---"
+
+##KREWSTATUS=$(kubectl krew list)
+##if [[ "$KREWSTATUS" =~ error ]] ; then
   echo "Installing krew.." &&
   cd "$(mktemp -d)" &&
   OS="$(uname | tr '[:upper:]' '[:lower:]')" &&
@@ -62,17 +64,22 @@ if ! kubectl krew version ; then
   KREW="krew-${OS}_${ARCH}" &&
   curl -fsSLO "https://github.com/kubernetes-sigs/krew/releases/latest/download/${KREW}.tar.gz" &&
   tar zxvf "${KREW}.tar.gz" &&
-  ./"${KREW}" install krew
-  )
+  ./"${KREW}" install krew &&
+  echo 'export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH"' >> /home/gitpod/.bashrc &&
+  echo 'export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH"' >> /home/vscode/.bashrc &&
+  ./"${KREW}" list
 
   kubectl krew install cilium
   kubectl krew index add kvaps https://github.com/kvaps/krew-index
   kubectl krew install kvaps/node-shell
   kubectl krew install stern
 
-else
-  echo "krew et ses modules deja installés"
-fi
+  rm -f /workspaces/TP-CNI/krew
+  ln -s $PWD/"${KREW}" /workspaces/TP-CNI/krew
+
+##else
+##  echo "krew et ses modules deja installés (return code $KREWSTATUS)"
+##fi
 
 if ! k9s version ; then
 	echo "Installation de k9s"
