@@ -4,7 +4,8 @@ loadBalancer:
   #mode: snat
 nodePort:
   mode: dsr
-tunnel: disabled
+##tunnel: disabled
+routingMode: native
 autoDirectNodeRoutes: true
 ipv4NativeRoutingCIDR: "10.0.0.0/8"
 ##
