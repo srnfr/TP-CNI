@@ -5,4 +5,4 @@ for c in $(kind get clusters); do
 	kind delete cluster --name $c
 done
 
-/mnt/cilium_lab/bgp-cplane-demo/10-destroy-all.sh
+./10-destroy-all.sh
