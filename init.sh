@@ -50,7 +50,19 @@ fi
 cilium version
 cilium status
 
-export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH"
+## Install Hubble 
+if [ -f /usr/local/bin/hubble ]; then
+  echo "Hubble deja installé"
+else
+  HUBBLE_VERSION=$(curl -s https://raw.githubusercontent.com/cilium/hubble/master/stable.txt)
+  HUBBLE_ARCH=amd64
+  if [ "$(uname -m)" = "aarch64" ]; then HUBBLE_ARCH=arm64; fi
+  curl -L --fail --remote-name-all https://github.com/cilium/hubble/releases/download/$HUBBLE_VERSION/hubble-linux-${HUBBLE_ARCH}.tar.gz{,.sha256sum}
+  sha256sum --check hubble-linux-${HUBBLE_ARCH}.tar.gz.sha256sum
+  sudo tar xzvfC hubble-linux-${HUBBLE_ARCH}.tar.gz /usr/local/bin
+  hubble-linux-${HUBBLE_ARCH}.tar.gz{,.sha256sum}
+fi
+
 
 ## Install Krew
 echo "--- Krew ---"
