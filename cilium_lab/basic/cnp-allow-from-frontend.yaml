@@ -1,0 +1,16 @@
+## cnp-allow-from-redis-and-frontend.yaml
+kind: CiliumNetworkPolicy
+apiVersion: cilium.io/v2
+metadata:
+  name: cnp-allow-from-frontend
+spec:
+  endpointSelector:
+    matchLabels:
+      app: redis
+      role: leader
+      tier: backend
+  ingress:
+  - fromEndpoints:
+    - matchLabels:
+          app: guestbook
+          tier: frontend
