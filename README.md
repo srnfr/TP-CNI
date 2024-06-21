@@ -24,7 +24,7 @@
 Les TPs dont les noms finissent en (*) se déroulent sur une VM avec un cluster [KinD](https://kind.sigs.k8s.io/).  
 Les autres se déroulent sur l'opérateur de Cloud Public DigitalOcean ([lien sponsorisé : 200€ sur 60j](https://m.do.co/c/ffe6205525bf)).
 
-Ces TPs ont été conçus et écrits par [@srnfr](https://github.com/srnfr/).
+Ces TPs ont été conçus et écrits par [@srnfr](https://github.com/srnfr/) dans le cadre de la formation "Cilium pour les équipes réseaux"
 
 Leur usage est possible dans le cadre de la [Licence GPL2.0](./LICENSE.md).
 
