@@ -25,3 +25,4 @@ networking:
   apiServerAddress: "0.0.0.0"
   apiServerPort: 6443
   disableDefaultCNI: true
+  kubeProxyMode: none
