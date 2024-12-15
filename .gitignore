@@ -5,3 +5,4 @@ krew
 *.sha256sum
 get_helm.sh
 .env
+*.kubeconfig.yaml

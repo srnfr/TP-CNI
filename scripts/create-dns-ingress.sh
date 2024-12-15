@@ -25,5 +25,17 @@ for c in $(doctl kubernetes clusters list --format Name --context $CTX_K8S | gre
         doctl kubernetes cluster kubeconfig show $c --context $CTX_K8S > $c.kubeconfig.yaml
         PUBIP=$(kubectl get svc -n ingress-nginx ingress-nginx-controller -o jsonpath='{.status.loadBalancer.ingress[0].ip}' --kubeconfig=./$c.kubeconfig.yaml)
         echo "PUBIP of ingress $c = $PUBIP"
+	num=$(echo $c | cut -f3 -d- | sed 's/grp//' | sed 's/\s//g')
+	re='^[0-9]+$'
+	if [[ $num =~ $re ]]; then
+	      	echo "$num"
+      	else
+		echo "Error: $num is not a number"
+		exit 0;
+	fi		
+
+	if ! [ -z "${PUBIP}" ]; then
+		doctl compute domain records create ${INGRESS_DOMAIN} --record-ttl 60 --record-type A --record-name ing-${num}.${INGRESS_DOMAIN} --record-data ${PUBIP} --context ${CTX}
+	fi
     fi
 done;

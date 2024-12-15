@@ -6,11 +6,15 @@ if ([ -z "${CTX_K8S}" ]); then
 	CTX_K8S="default"
 fi
 
-echo "Install de nginx ingress de la marketplace DO sur :"
+helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx
+helm repo update ingress-nginx
 
-for c in $(doctl kubernetes clusters list --format ID --context $CTX_K8S | grep -v ID ); do
+echo "Install de nginx ingress via Helm sur :"
+
+for c in $(doctl kubernetes clusters list --format Name --context $CTX_K8S | grep -v Name ); do
     if [[ "$c" != "Name" ]]; then
         echo "- $c"
-	doctl kubernetes 1-click install $c --1-clicks nginx-ingress --context $CTX_K8S
+	doctl kubernetes cluster kubeconfig show $c --context $CTX_K8S > $c.kubeconfig.yaml
+	helm install ingress-nginx ingress-nginx/ingress-nginx --namespace ingress-nginx --create-namespace --kubeconfig $c.kubeconfig.yaml
     fi
 done;
