@@ -1,6 +1,6 @@
 .DS_Store
 ingress.yaml
-cilium-linux-amd64.tar.gz
+*-amd64.tar.gz
 krew
 *.sha256sum
 get_helm.sh
