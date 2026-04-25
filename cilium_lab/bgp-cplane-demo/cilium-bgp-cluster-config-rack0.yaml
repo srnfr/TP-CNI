@@ -1,0 +1,17 @@
+apiVersion: cilium.io/v2
+kind: CiliumBGPClusterConfig
+metadata:
+  name: bgp-rack0
+spec:
+  nodeSelector:
+    matchLabels:
+      rack: "rack0"
+  bgpInstances:
+    - name: "65010"
+      localASN: 65010
+      peers:
+        - name: "tor0"
+          peerAddress: "10.0.0.1"
+          peerASN: 65010
+          peerConfigRef:
+            name: "cilium-peer-config"
