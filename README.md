@@ -22,6 +22,7 @@ TPs & Labs dans le cadre de "Cilium pour les équipes réseaux"
 18. [Audit Mode](/docs/TP18.md)
 19. [Filtrage L7 en autonomie](/docs/TP19.md)
 20. [Gateway API en HTTP et HTTPS](/docs/TP20.md)
+21. [Cilium Cluster Mesh *](/docs/TP21.md)
 
 Les TPs dont les noms finissent en (*) se déroulent sur une VM avec un cluster [KinD](https://kind.sigs.k8s.io/).  
 Les autres se déroulent sur l'opérateur de Cloud Public DigitalOcean ([lien sponsorisé : 200€ sur 60j](https://m.do.co/c/ffe6205525bf)).

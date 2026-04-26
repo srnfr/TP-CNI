@@ -1,0 +1,12 @@
+## Pod de test pour générer du trafic vers l'echo-service
+apiVersion: v1
+kind: Pod
+metadata:
+  name: client
+  namespace: default
+spec:
+  containers:
+  - name: client
+    image: nicolaka/netshoot
+    command: ["sleep", "infinity"]
+  terminationGracePeriodSeconds: 0
