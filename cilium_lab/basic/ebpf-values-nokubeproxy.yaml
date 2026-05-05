@@ -27,6 +27,11 @@ prometheus:
   enabled: true
 hubble:
   enabled: true
+  # Event buffer capacity (default: 4096)
+  # Each event uses approximately 100-200 bytes
+  # 4096 events ~= 400KB-800KB per agent
+  # 65536 events ~= 6.5MB-13MB per agent
+  eventBufferCapacity: "65535"
   metrics:
     enabled:
        - drop
