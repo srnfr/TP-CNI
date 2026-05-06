@@ -29,16 +29,6 @@ spec:
   hostnames:
     - grpX.randco.eu
   rules:
-    # Règle 1 : laisser passer .well-known/acme-challenge sans redirection
-    - matches:
-        - path:
-            type: PathPrefix
-            value: /.well-known/acme-challenge
-      backendRefs:
-        - name: demo-service-v1
-          port: 80
-
-    # Règle 2 : rediriger tout le reste vers HTTPS
     - filters:
         - type: RequestRedirect
           requestRedirect:
