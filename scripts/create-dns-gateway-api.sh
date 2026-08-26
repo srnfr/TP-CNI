@@ -15,8 +15,8 @@ fi
 
 DNS_DOMAIN=${DNS_DOMAIN:-randco.eu}
 DNS_TTL=${DNS_TTL:-60}
-DNS_CONTEXT=${DNS_CONTEXT:-${CTX:-default}}
-K8S_CONTEXT=${K8S_CONTEXT:-${CTX_K8S:-default}}
+DNS_CONTEXT=${DNS_CONTEXT:-${CTX:-}}
+K8S_CONTEXT=${K8S_CONTEXT:-${CTX_K8S:-}}
 GATEWAY_NAMESPACE=${GATEWAY_NAMESPACE:-default}
 GATEWAY_NAME=${GATEWAY_NAME:-demo-gateway}
 CLUSTER_NAME_REGEX=${CLUSTER_NAME_REGEX:-grp[0-9]+}
@@ -31,8 +31,8 @@ usage() {
     printf 'Variables facultatives :\n'
     printf '  DNS_DOMAIN             Zone DNS (défaut : randco.eu)\n'
     printf '  DNS_TTL                TTL des enregistrements (défaut : 60)\n'
-    printf '  DNS_CONTEXT            Contexte doctl qui héberge la zone DNS\n'
-    printf '  K8S_CONTEXT            Contexte doctl qui héberge DOKS et les LB\n'
+    printf '  DNS_CONTEXT            Contexte doctl qui héberge la zone DNS (courant par défaut)\n'
+    printf '  K8S_CONTEXT            Contexte doctl qui héberge DOKS et les LB (courant par défaut)\n'
     printf '  GATEWAY_NAMESPACE      Namespace de la Gateway (défaut : default)\n'
     printf '  GATEWAY_NAME           Nom de la Gateway (défaut : demo-gateway)\n'
     printf '  CLUSTER_NAME_REGEX     Filtre des clusters (défaut : grp[0-9]+)\n'
@@ -82,20 +82,43 @@ is_ipv4() {
 }
 
 doctl_dns() {
-    doctl "$@" --context "${DNS_CONTEXT}"
+    if [[ -n "${DNS_CONTEXT}" ]]; then
+        doctl "$@" --context "${DNS_CONTEXT}"
+    else
+        doctl "$@"
+    fi
 }
 
 doctl_k8s() {
-    doctl "$@" --context "${K8S_CONTEXT}"
+    if [[ -n "${K8S_CONTEXT}" ]]; then
+        doctl "$@" --context "${K8S_CONTEXT}"
+    else
+        doctl "$@"
+    fi
 }
 
 replace_record() {
     local hostname=$1
     local address=$2
     local short_name=${hostname%.${DNS_DOMAIN}}
-    local records_json existing_records record_id record_data
+    local records_json matching_records existing_records
+    local existing_count incorrect_count record_id record_data
 
     records_json=$(doctl_dns compute domain records list "${DNS_DOMAIN}" --output json)
+    matching_records=$(jq --arg fqdn "${hostname}" --arg short "${short_name}" \
+        '[.[] | select(.type == "A" and (.name == $fqdn or .name == $short))]' \
+        <<< "${records_json}")
+    existing_count=$(jq 'length' <<< "${matching_records}")
+    incorrect_count=$(jq --arg address "${address}" \
+        '[.[] | select(.data != $address)] | length' \
+        <<< "${matching_records}")
+
+    if ((existing_count > 0 && incorrect_count == 0)); then
+        printf 'CONSERVATION %-25s = %s (déjà correct)\n' \
+            "${hostname}" "${address}"
+        return 0
+    fi
+
     existing_records=$(jq -r --arg fqdn "${hostname}" --arg short "${short_name}" \
         '.[] | select(.type == "A" and (.name == $fqdn or .name == $short)) | [.id, .data] | @tsv' \
         <<< "${records_json}")
@@ -130,12 +153,11 @@ kubeconfig_file="${temporary_directory}/kubeconfig"
 trap 'rm -rf "${temporary_directory}"' EXIT
 
 printf 'Zone DNS       : %s\n' "${DNS_DOMAIN}"
-printf 'Contexte DNS   : %s\n' "${DNS_CONTEXT}"
-printf 'Contexte DOKS  : %s\n' "${K8S_CONTEXT}"
+printf 'Contexte DNS   : %s\n' "${DNS_CONTEXT:-courant doctl}"
+printf 'Contexte DOKS  : %s\n' "${K8S_CONTEXT:-courant doctl}"
 printf 'Gateway        : %s/%s\n' "${GATEWAY_NAMESPACE}" "${GATEWAY_NAME}"
 printf 'Mode           : %s\n\n' "$([[ "${DRY_RUN}" == true ]] && printf simulation || printf application)"
 
-load_balancers_json=$(doctl_k8s compute load-balancer list --output json)
 clusters=$(doctl_k8s kubernetes cluster list --format Name --no-header)
 
 processed=0
@@ -177,47 +199,23 @@ while IFS= read -r cluster_name; do
         continue
     fi
 
-    if [[ -z "${load_balancer_name}" ]]; then
-        printf 'ERREUR         : annotation do-loadbalancer-name absente\n\n' >&2
+    if ! is_ipv4 "${gateway_ip}"; then
+        printf 'ERREUR         : aucune IPv4 publique dans le statut de la Gateway\n\n' \
+            >&2
         ((errors += 1))
         continue
     fi
 
-    load_balancer_count=$(jq --arg name "${load_balancer_name}" \
-        '[.[] | select(.name == $name)] | length' <<< "${load_balancers_json}")
-    if ((load_balancer_count != 1)); then
-        printf 'ERREUR         : Load Balancer %s introuvable ou non unique\n\n' \
-            "${load_balancer_name}" >&2
-        ((errors += 1))
-        continue
+    if [[ -n "${load_balancer_name}" ]]; then
+        printf 'Load Balancer  : %s (adresse publiée par la Gateway)\n' \
+            "${load_balancer_name}"
+    else
+        printf 'Load Balancer  : annotation absente (adresse publiée par la Gateway)\n'
     fi
 
-    load_balancer_id=$(jq -r --arg name "${load_balancer_name}" \
-        '.[] | select(.name == $name) | .id' <<< "${load_balancers_json}")
-    load_balancer_ip=$(jq -r --arg name "${load_balancer_name}" \
-        '.[] | select(.name == $name) | .ip' <<< "${load_balancers_json}")
-    load_balancer_status=$(jq -r --arg name "${load_balancer_name}" \
-        '.[] | select(.name == $name) | .status' <<< "${load_balancers_json}")
+    printf 'Adresse        : %s\n' "${gateway_ip}"
 
-    if ! is_ipv4 "${load_balancer_ip}"; then
-        printf 'ERREUR         : aucune IPv4 publique pour le Load Balancer %s\n\n' \
-            "${load_balancer_name}" >&2
-        ((errors += 1))
-        continue
-    fi
-
-    if [[ -n "${gateway_ip}" && "${gateway_ip}" != "${load_balancer_ip}" ]]; then
-        printf 'ERREUR         : IP Gateway %s différente de l’IP du LB %s\n\n' \
-            "${gateway_ip}" "${load_balancer_ip}" >&2
-        ((errors += 1))
-        continue
-    fi
-
-    printf 'Load Balancer  : %s (%s, %s)\n' \
-        "${load_balancer_name}" "${load_balancer_id}" "${load_balancer_status}"
-    printf 'Adresse        : %s\n' "${load_balancer_ip}"
-
-    if replace_record "${hostname}" "${load_balancer_ip}"; then
+    if replace_record "${hostname}" "${gateway_ip}"; then
         ((processed += 1))
     else
         ((errors += 1))
