@@ -6,7 +6,7 @@ spec:
   selector:
     matchLabels:
       app: toto
-  replicas: 3
+  replicas: 4
   template:
     metadata:
       labels:
